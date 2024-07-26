@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:29:42 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/24 01:59:03 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/25 01:24:11 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_command(t_piped *piped, int cmd_index, t_envb *env)
 	exit(1);
 }
 
-int	end_process(t_piped *piped)
+int	end_process(t_piped *piped, t_envb *env)
 {
 	int	status;
 	int	i;
@@ -105,7 +105,7 @@ int	end_process(t_piped *piped)
 	dup2(piped->stdin_cpy, 1);
 	close(piped->stdin_cpy);
 	close(piped->stdout_cpy);
-	return (WEXITSTATUS(status));
+	return (exit_status(status, env));
 }
 
 int	main_pipe(int ac, char **av, t_envb *env)
@@ -126,5 +126,5 @@ int	main_pipe(int ac, char **av, t_envb *env)
 			execute_command(&piped, i, env);
 		i++;
 	}
-	return (end_process(&piped));
+	return (end_process(&piped, env));
 }

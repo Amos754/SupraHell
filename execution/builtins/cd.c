@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:11:38 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/24 01:06:27 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/25 00:59:43 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	change_pwd(t_envb *env)
 {
 	int		i;
 	char	*buff;
-	int		j;
 
 	i = 0;
 	while (ft_strncmp(env->env[i], "PWD=", 4))
@@ -26,12 +25,6 @@ int	change_pwd(t_envb *env)
 	buff = ft_strjoin("PWD=", buff);
 	if (env->env[i])
 		env->env[i] = buff;
-	j = 0;
-	while (env->env[j])
-	{
-		printf("%s\n", env->env[j]);
-		j++;
-	}
 	free(env->pwd);
 	free(env->env[i]);
 	return (1);
@@ -49,7 +42,6 @@ int	go_to_directory(char *buff, char *dir, t_envb *env)
 	totalpath = ft_split(buff, '/');
 	while (totalpath[i])
 		i++;
-	printf("%d\n\n", i);
 	j = i + 1;
 	i = 0;
 	while (i < j)
@@ -61,7 +53,6 @@ int	go_to_directory(char *buff, char *dir, t_envb *env)
 		buff2 = ft_strjoin(buff2, "/");
 		i++;
 	}
-	printf("buff : %s\n\n", buff2);
 	change_pwd(env);
 	return (chdir(buff2));
 }

@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:09:46 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/24 02:20:54 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/25 01:27:28 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		inp = readline("FCKG_HELL ");
-		printf("input : %s\n\n", inp);
 		fd[0] = dup(0);
 		fd[1] = dup(1);
 		add_history((char *)inp);
@@ -42,6 +41,7 @@ int	main(int ac, char **av, char **envp)
 			ast_executor(tree, env);
 		fd[0] = dup2(fd[0], 0);
 		fd[1] = dup2(fd[1], 1);
+		printf("\nex_status : %d\n", env->exstatus);
 		//return (1);
 	}
 	// inp = readline("");

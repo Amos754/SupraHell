@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abolor-e <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:12:06 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/17 15:12:08 by abolor-e         ###   ########.fr       */
+/*   Updated: 2024/07/25 01:34:55 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	ft_echo(char **av, int nbr)
+int	ft_echo(char **av, int nbr, t_envb *env)
 {
 	char	*str;
 	int		i;
@@ -23,6 +23,8 @@ int	ft_echo(char **av, int nbr)
 		i = 2;
 	while (av[i])
 	{
+		// if (!ft_strncmp(av[i], "$?", 2))
+		// 	printf("%d", env->exstatus);
 		printf("%s", av[i++]);
 		if (av[i])
 			printf(" ");
@@ -32,7 +34,7 @@ int	ft_echo(char **av, int nbr)
 	return (0);
 }
 
-int	main_echo(int ac, char **av)
+int	main_echo(int ac, char **av, t_envb *env)
 {
 	int	nbr;
 
@@ -45,7 +47,7 @@ int	main_echo(int ac, char **av)
 			if (!av[2])
 				return (0);
 		}
-		if (ft_echo(av, nbr) == 127)
+		if (ft_echo(av, nbr, env) == 127)
 			return (127);
 		return (0);
 	}

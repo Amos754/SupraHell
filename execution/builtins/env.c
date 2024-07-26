@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abolor-e <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:12:21 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/17 15:12:23 by abolor-e         ###   ########.fr       */
+/*   Updated: 2024/07/25 01:50:26 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	main_env(int ac, char **av, t_envb *env)
 	if (ac != 1)
 	{
 		write(2, "env: ", 5);
-		write(2, av[2], ft_strlen(av[2]));
-		write(2, "No such file or directory\n", 27);
+		write(2, av[1], ft_strlen(av[1]));
+		write(2, " : No such file or directory\n", 30);
 	}
 	return (127);
 }

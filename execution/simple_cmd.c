@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:49:13 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/24 01:17:20 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/25 01:52:10 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	exec_binary(char **cmd_tab, t_envb *env)
 		if (pid_wait == -1)
 			return (-1);
 	}
-	return (/*get_status(status)*/0);
+	return (exit_status(status, env));
 }
 
 int	exec_builtin(char **cmd_tab, t_envb *env)
@@ -88,19 +88,19 @@ int	exec_builtin(char **cmd_tab, t_envb *env)
 	while (cmd_tab[ac])
 		ac++;
 	if (!ft_strcmp("cd", cmd_tab[0]))
-		return (main_cd(ac, cmd_tab, env));
+		return (env->exstatus = main_cd(ac, cmd_tab, env));
 	if (!ft_strcmp("echo", cmd_tab[0]))
-		return (main_echo(ac, cmd_tab));
+		return (env->exstatus = main_echo(ac, cmd_tab, env));
 	if (!ft_strcmp("exit", cmd_tab[0]))
-		return (main_exit(ac, cmd_tab));
+		exit(main_exit(ac, cmd_tab));
 	if (!ft_strcmp("env", cmd_tab[0]))
-		return (main_env(ac, cmd_tab, env));
+		return (env->exstatus = main_env(ac, cmd_tab, env));
 	if (!ft_strcmp("export", cmd_tab[0]))
-		return (main_export(ac, cmd_tab, env));
+		return (env->exstatus = main_export(ac, cmd_tab, env));
 	if (!ft_strcmp("pwd", cmd_tab[0]))
-		return (main_pwd(ac, cmd_tab));
+		return (env->exstatus = main_pwd(ac, cmd_tab));
 	if (!ft_strcmp("unset", cmd_tab[0]))
-		return (main_unset(ac, cmd_tab, env));
+		return (env->exstatus = main_unset(ac, cmd_tab, env));
 	return (0);
 }
 

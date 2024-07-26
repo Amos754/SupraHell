@@ -160,6 +160,7 @@ typedef struct s_varquote
 typedef struct s_envb
 {
 	int		shlvl;
+	int		exstatus;
 	char	*pwd;
 	char	*oldpwd;
 	char	**env;
@@ -293,12 +294,13 @@ void	close_pipe(t_piped *piped);
 void	red_deal_out(char *cmd, t_command *cmd_node, t_piped *piped, int fd);
 void	red_deal_in(char *cmd, t_command *cmd_node, t_piped *piped, int fd);
 void	red_dealer(char *cmd, t_command *cmd_node, t_piped *piped);
+int	exit_status(int status, t_envb *env);
 /*BUILTINS*/
 int	exec_builtin(char **cmd_tab, t_envb *env);
 t_envb	*env_init(char **env);
 int	env_size(char **env);
 int	main_cd(int ac, char **av, t_envb *env);
-int	main_echo(int ac, char **av);
+int	main_echo(int ac, char **av, t_envb *env);
 int	main_exit(int ac, char **av);
 char	ft_comp(char *s1, char *s2);
 void	freetab(char **tab);
