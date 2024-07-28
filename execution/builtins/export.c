@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:14:16 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/24 01:13:12 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/28 23:58:34 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,5 @@ int	main_export(int ac, char **av, t_envb *env)
 		return_value = main_export_utils(env, export, av);
 	if (return_value > 0)
 		return_value = 1;
-	free(env->pwd);
-	free(env);
 	return (return_value);
 }

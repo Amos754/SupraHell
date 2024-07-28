@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 01:57:57 by marechaloli       #+#    #+#             */
-/*   Updated: 2024/07/24 01:59:15 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/28 23:20:11 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,58 @@ void	close_pipe(t_piped *piped)
 	}
 }
 
+int	utils(int fd, t_piped *piped, int option, int cmd_index)
+{
+	if (option == 1)
+	{
+		if (cmd_index == 0)
+			dup2(piped->fd[cmd_index][1], 1);
+		else if (cmd_index == piped->num_cmds - 1)
+			dup2(piped->fd[cmd_index - 1][0], 0);
+		else
+		{
+			dup2(piped->fd[cmd_index - 1][0], 0);
+			dup2(piped->fd[cmd_index][1], 1);
+		}
+	}
+	else if (option == 2 || option == 3)
+	{
+		if (fd < 0)
+		{
+			if (option == 2)
+				perror("Input file open error");
+			else
+				perror("Output file open error");
+			return (1);
+		}
+		return (0);
+	}
+	return (0);
+}
+
 void	adj_exec(t_command *cmd_node, t_piped *piped, char *cmd, int cmd_index)
 {
-	if (cmd_node->input_file || cmd_node->output_file)
-		red_dealer(cmd, cmd_node, piped);
-	if (cmd_index == 0)
-		dup2(piped->fd[cmd_index][1], 1);
-	else if (cmd_index == piped->num_cmds - 1)
-		dup2(piped->fd[cmd_index - 1][0], 0);
-	else
+	int	fd;
+
+	if (cmd_node->input_file)
 	{
-		dup2(piped->fd[cmd_index - 1][0], 0);
-		dup2(piped->fd[cmd_index][1], 1);
+		fd = open(cmd_node->input_file, O_RDONLY);
+		if (utils(fd, NULL, 2, 0))
+			exit(1);
+		dup2(fd, 0);
 	}
+	if (cmd_node->output_file)
+	{
+		if (cmd_node->append_output)
+			fd = open(cmd_node->output_file, O_WRONLY
+					| O_CREAT | O_APPEND, 0644);
+		else
+			fd = open(cmd_node->output_file, O_WRONLY
+					| O_CREAT | O_TRUNC, 0644);
+		if (utils(fd, NULL, 3, 0))
+			exit(1);
+		dup2(fd, 1);
+	}
+	close(fd);
+	utils(0, piped, 1, cmd_index);
 }

@@ -18,7 +18,8 @@
 
 
 # define LINES				100
-# define BISON_AUTOMATON	"./syntax_analysis/parsing_table"
+# define BISON_AUTOMATON	"/syntax_analysis/parsing_table"
+
 # define ERROR -1
 
 typedef struct s_command {
@@ -234,7 +235,7 @@ int	push_reducted(t_stack **stack, int next);
 t_stack	*pop_oper(t_stack **stack, int reduce);
 void	pop_check(t_stack **red, t_stack *stack);
 
-t_table	**ft_init_parsing_table(void);
+t_table	**ft_init_parsing_table(char *path);
 int	ft_create_table_state(int fd, t_table **table);
 static int	free_line_args(char *line, char **args, int code);
 t_table	*ft_add_table_line(char **arg_line);
@@ -295,6 +296,7 @@ void	red_deal_out(char *cmd, t_command *cmd_node, t_piped *piped, int fd);
 void	red_deal_in(char *cmd, t_command *cmd_node, t_piped *piped, int fd);
 void	red_dealer(char *cmd, t_command *cmd_node, t_piped *piped);
 int	exit_status(int status, t_envb *env);
+void adjust_command_for_tee(t_command *cmd_node);
 /*BUILTINS*/
 int	exec_builtin(char **cmd_tab, t_envb *env);
 t_envb	*env_init(char **env);

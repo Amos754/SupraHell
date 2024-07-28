@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 01:53:23 by marechaloli       #+#    #+#             */
-/*   Updated: 2024/07/24 01:54:48 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/28 23:11:46 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void	add_command(t_piped *piped, char *cmd)
 	{
 		current = piped->commands;
 		while (current->next)
-		{
 			current = current->next;
-		}
 		current->next = new_node;
 	}
 }

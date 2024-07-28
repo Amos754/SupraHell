@@ -6,11 +6,43 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:12:06 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/25 01:34:55 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/27 01:59:05 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	env_uti(char *str)
+{
+	int	size;
+
+	size = 0;
+	while (str[size] != '=')
+		size++;
+	return (size);
+}
+
+void	dollar_ech(char *str, t_envb *env)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_strncmp(str, "?", 1))
+	{
+		printf("%d", env->exstatus);
+		return ;
+	}
+	while (env->env[i])
+	{
+		if (!ft_strncmp(env->env[i], str, env_uti(env->env[i])))
+		{
+			printf("%s", env->env[i] + ft_strlen(str) + 1);
+			return ;
+		}
+		i++;
+	}
+	return ;
+}
 
 int	ft_echo(char **av, int nbr, t_envb *env)
 {
@@ -23,11 +55,13 @@ int	ft_echo(char **av, int nbr, t_envb *env)
 		i = 2;
 	while (av[i])
 	{
-		// if (!ft_strncmp(av[i], "$?", 2))
-		// 	printf("%d", env->exstatus);
-		printf("%s", av[i++]);
-		if (av[i])
+		if (!ft_strncmp(av[i], "$", 1))
+			dollar_ech(av[i] + 1, env);
+		else
+			printf("%s", av[i]);
+		if (av[i + 1])
 			printf(" ");
+		i++;
 	}
 	if (nbr == 0)
 		printf("\n");

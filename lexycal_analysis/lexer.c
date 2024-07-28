@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abolor-e <abolor-e@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 15:35:46 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/23 16:20:08 by abolor-e         ###   ########.fr       */
+/*   Updated: 2024/07/26 13:29:43 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ t_token	*token_creation(int token_len, char *str, char *exit, int *q)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			*q = replace_quote((t_varcomb){str, exit}, new, &i, &i_new);
-		else if (str[i] == '$')
-			check_env((t_varcomb){str, exit}, new, &i, &i_new);
+		// else if (str[i] == '$')
+		// 	check_env((t_varcomb){str, exit}, new, &i, &i_new);
 		else
 			new[i_new++] = str[i++];
 		new[i_new] = '\0';

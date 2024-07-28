@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:11:38 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/25 00:59:43 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/29 00:51:21 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	change_pwd(t_envb *env)
 	buff = ft_strjoin("PWD=", buff);
 	if (env->env[i])
 		env->env[i] = buff;
-	free(env->pwd);
-	free(env->env[i]);
 	return (1);
 }
 
@@ -72,17 +70,14 @@ int	go_home(char **envp, t_envb *env)
 				write(2, "minishell: cd: ", 16);
 				perror(envp[i] + 5);
 				change_pwd(env);
-				free(env);
 				return (3);
 			}
 			change_pwd(env);
-			free(env);
 			return (0);
 		}
 		i++;
 	}
 	change_pwd(env);
-	free(env);
 	return (2);
 }
 
@@ -94,6 +89,7 @@ void	change_old_pwd(t_envb *env, char *buff)
 	while (ft_strncmp(env->env[i], "OLDPWD=", 7))
 		i++;
 	buff = ft_strjoin("OLDPWD=", buff);
+	env->oldpwd = buff;
 	if (env->env[i])
 		env->env[i] = buff;
 }
@@ -107,21 +103,22 @@ int	main_cd(int ac, char **av, t_envb *env)
 	if (ac == 1)
 	{
 		change_old_pwd(env, buff2);
+		return (free(buff2), cd_error(NULL, go_home(env->env, env)));
+	}
+	else if (ac == 2 && !ft_strncmp(av[1], "-", ft_strlen(av[1])))
+	{
+		if (chdir(env->oldpwd + 7) == -1 && change_pwd(env))
+			return (cd_error(av, 4));
+		printf("%s\n", env->oldpwd + 7);
+		change_old_pwd(env, buff2);
 		free(buff2);
-		return (cd_error(NULL, go_home(env->env, env)));
 	}
 	else
 	{
 		change_old_pwd(env, buff2);
 		free(buff2);
 		if (chdir(av[1]) == -1 && change_pwd(env))
-		{
-			cd_error(av, 1);
-			free(env);
-			return (1);
-		}
+			return (cd_error(av, 1));
 	}
-	change_pwd(env);
-	free(env);
-	return (0);
+	return (change_pwd(env), 0);
 }

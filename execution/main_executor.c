@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main_executor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abolor-e <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:20:39 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/17 15:20:41 by abolor-e         ###   ########.fr       */
+/*   Updated: 2024/07/29 00:44:40 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// t_tree	*tree_pointer(t_tree *tree, int param)
-// {
-// 	if (!tree)
-// 		return (NULL);
-// 	printf("test in : %s\n", (char *)tree->data);
-// 	if (tree->type == param)
-// 	{
-// 		printf("test in  good : %s\n", (char *)tree->data);
-// 		printf("GOOD!\n");
-// 		return (tree);
-// 	}
-// 	if (tree->type != param )
-// 	{
-// 		tree_pointer(tree->left, param);
-// 		tree_pointer(tree->right, param);
-// 	}
-// 	return (tree);
-// }
 
 int	tree_finder(t_tree *tree, int param, int nb)
 {
