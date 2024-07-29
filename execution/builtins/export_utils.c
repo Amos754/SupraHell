@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:15:01 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/25 00:54:28 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/30 00:41:36 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int	check_args(char *av)
 	return (0);
 }
 
-t_envb	*new_env2(t_envb *env, t_envb *export, int j, char *str)
+void	new_env2(t_envb *env, t_envb *export, int j, char *str)
 {
 	env->env[j] = str;
-	return (env);
+	// return (env);
 }

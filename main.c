@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:09:46 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/29 00:25:21 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/30 01:49:18 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,18 @@ int	main(int ac, char **av, char **envp)
 	char		*inp;
 	t_tree		*tree;
 	t_table		**parsingtable;
-	t_toolkit	*toolkit;
 	t_envb		*env;
 	char **test;
 	char *good;
 	int	i;
 	int	fd[2];
 	char	*pt_path;
-
-	env = env_init(envp);
+	
+	if (!(envp[0]))
+		env = env_init(NULL);
+	else
+		env = env_init(envp);
+	// printf("%s\n", env->env[i]);
 	pt_path = ft_strjoin(new_bison(), BISON_AUTOMATON);
 	while (1)
 	{

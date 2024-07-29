@@ -6,13 +6,13 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:14:16 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/28 23:58:34 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/30 01:53:44 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	print_all(t_envb *env)
+void	print_all(t_envb *env, int ac)
 {
 	int		i;
 	int		j;
@@ -29,7 +29,8 @@ void	print_all(t_envb *env)
 		}
 		i++;
 	}
-	print_all_utils(env);
+	if (ac == 1)
+		print_all_utils(env);
 }
 
 void	print_3(t_envb *env)
@@ -42,7 +43,7 @@ void	print_3(t_envb *env)
 		printf("declare -x SHLVL=\"%d\"\n", env->shlvl);
 }
 
-void	print_export(t_envb *env)
+void	print_export(t_envb *env, int ac)
 {
 	int	i;
 
@@ -50,7 +51,7 @@ void	print_export(t_envb *env)
 	if (!env->env)
 		print_3(env);
 	else
-		print_all(env);
+		print_all(env, ac);
 }
 
 int	main_export_utils(t_envb *env, t_envb *export, char **av)
@@ -60,7 +61,7 @@ int	main_export_utils(t_envb *env, t_envb *export, char **av)
 	int	export_value;
 	int	return_value;
 
-	i = 1;
+	i = 0;
 	while (av[i++])
 	{
 		return_value += check_args(av[i]);
@@ -71,12 +72,11 @@ int	main_export_utils(t_envb *env, t_envb *export, char **av)
 			if (!ft_strncmp(env->env[j], av[i], export_value))
 			{
 				if (export_value > 0)
-					env = new_env2(env, export, j, av[i]);
+					new_env2(env, export, j, av[i]);
 			}
 			j++;
 		}
 		env->env[j + 1] = NULL;
-		av[i] = ft_strjoin(av[i], "\n");
 		env->env[j] = av[i];
 	}
 	return (return_value);
@@ -86,11 +86,16 @@ int	main_export(int ac, char **av, t_envb *env)
 {
 	t_envb	*export;
 	int		return_value;
-
-	if (ac == 1)
-		print_export(env);
+	int	tmp;
+	if (ac == 1 || ac == 0)
+	{
+		print_export(env, ac);
+	}
 	else
+	{
 		return_value = main_export_utils(env, export, av);
+		main_export(0, NULL, env);
+	}
 	if (return_value > 0)
 		return_value = 1;
 	return (return_value);

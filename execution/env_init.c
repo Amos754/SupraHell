@@ -6,7 +6,7 @@
 /*   By: marechalolivier <marechalolivier@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 15:20:01 by abolor-e          #+#    #+#             */
-/*   Updated: 2024/07/29 00:54:55 by marechaloli      ###   ########.fr       */
+/*   Updated: 2024/07/30 01:51:02 by marechaloli      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ t_envb	*env_init(char **env)
 	int		i;
 	char	*old_pwd;
 
-	i = env_size(env);
+	if (!env)
+		i = 0;
+	else
+		i = env_size(env);
 	envinit = malloc(sizeof(t_envb));
 	buff = malloc(1024);
 	getcwd(buff, 1024);
@@ -68,10 +71,29 @@ t_envb	*env_init(char **env)
 		envinit = change_shlvl(envinit);
 	}
 	i = 0;
-	while (ft_strncmp(envinit->env[i], "OLDPWD=", 7))
-		i++;
-	envinit->oldpwd = envinit->env[i];
-	envinit->pwd = buff;
+	if (!env)
+	{
+		envinit->env = malloc(sizeof(char **) * 4);
+		envinit->env[0] = ft_strjoin("PWD=", buff);
+		envinit->env[1] = "SHLVL=1";
+		envinit->env[2] = "OLDPWD=";
+		envinit->env[3] = NULL;
+		envinit->env = NULL;
+		envinit->pwd = buff;
+		envinit->oldpwd = "OLDPWD";
+		envinit->shlvl = 1;
+		envinit->usr = NULL;
+		envinit->i = 1;
+		return (envinit);
+	}
+	else
+	{
+		envinit->i = 0;
+		while (ft_strncmp(envinit->env[i], "OLDPWD=", 7))
+			i++;
+		envinit->oldpwd = envinit->env[i];
+		envinit->pwd = buff;
+	}
 	envinit->usr = "_=/usr/bin/env";
 	return (envinit);
 }
